@@ -1,5 +1,56 @@
 # Change Log
 
+## 2.73.0 (2021-03-02)
+[Source](https://github.com/nerdvegas/rez/tree/2.73.0) | [Diff](https://github.com/nerdvegas/rez/compare/2.72.5...2.73.0)
+
+**Merged pull requests:**
+
+- context bundles [\#1029](https://github.com/nerdvegas/rez/pull/1029) ([nerdvegas](https://github.com/nerdvegas))
+
+**Closed issues:**
+
+- bundled contexts ("bundles") [\#1009](https://github.com/nerdvegas/rez/issues/1009)
+
+## 2.72.5 (2021-03-02)
+[Source](https://github.com/nerdvegas/rez/tree/2.72.5) | [Diff](https://github.com/nerdvegas/rez/compare/2.72.4...2.72.5)
+
+**Merged pull requests:**
+
+- Improve get_variant_from_uri on Windows [\#1011](https://github.com/nerdvegas/rez/pull/1011) ([davidlatwe](https://github.com/davidlatwe))
+
+## 2.72.4 (2021-03-02)
+[Source](https://github.com/nerdvegas/rez/tree/2.72.4) | [Diff](https://github.com/nerdvegas/rez/compare/2.72.3...2.72.4)
+
+**Merged pull requests:**
+
+- Wait subprocess cleanup [\#1010](https://github.com/nerdvegas/rez/pull/1010) ([davidlatwe](https://github.com/davidlatwe))
+
+## 2.72.3 (2021-02-23)
+[Source](https://github.com/nerdvegas/rez/tree/2.72.3) | [Diff](https://github.com/nerdvegas/rez/compare/2.72.2...2.72.3)
+
+**Merged pull requests:**
+
+- Fix tab-completion behavior for rez deployments installed with python3 [\#1021](https://github.com/nerdvegas/rez/pull/1021) ([zachlewis](https://github.com/zachlewis))
+
+**Closed issues:**
+
+- Tab completion broken for rez deployments installed with Python-3.6 [\#1020](https://github.com/nerdvegas/rez/issues/1020)
+
+## 2.72.2 (2021-02-23)
+[Source](https://github.com/nerdvegas/rez/tree/2.72.2) | [Diff](https://github.com/nerdvegas/rez/compare/2.72.1...2.72.2)
+
+**Merged pull requests:**
+
+- Fix install-as-rez-package script for Windows [\#1014](https://github.com/nerdvegas/rez/pull/1014) ([davidlatwe](https://github.com/davidlatwe))
+
+## 2.72.1 (2021-02-23)
+[Source](https://github.com/nerdvegas/rez/tree/2.72.1) | [Diff](https://github.com/nerdvegas/rez/compare/2.72.0...2.72.1)
+
+**Merged pull requests:**
+
+- Fix dir/file remove error handling [\#1012](https://github.com/nerdvegas/rez/pull/1012) ([davidlatwe](https://github.com/davidlatwe))
+- Fixes bug where readlink is applied on regular files. [\#1019](https://github.com/nerdvegas/rez/pull/1019) ([bfloch](https://github.com/bfloch))
+
 ## 2.72.0 (2021-01-12)
 [Source](https://github.com/nerdvegas/rez/tree/2.72.0) | [Diff](https://github.com/nerdvegas/rez/compare/2.71.0...2.72.0)
 
