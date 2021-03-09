@@ -173,6 +173,16 @@ class RequirementsBinding(RO_MappingBinding):
     def _attr_error(self, attr):
         raise AttributeError("request does not exist: '%s'" % attr)
 
+    def get_range(self, name, default=None):
+        """Returns requirement version range object"""
+        req_str = self._data.get(name)
+        if req_str:
+            return Requirement(req_str).range
+        elif default is not None:
+            return VersionRange(default)
+        else:
+            return None
+
 
 class EphemeralsBinding(RO_MappingBinding):
     """Binds a list of resolved ephemeral packages.
@@ -192,6 +202,16 @@ class EphemeralsBinding(RO_MappingBinding):
 
     def _attr_error(self, attr):
         raise AttributeError("ephemeral does not exist: '%s'" % attr)
+
+    def get_range(self, name, default=None):
+        """Returns ephemeral version range object"""
+        req_str = self._data.get(name)
+        if req_str:
+            return Requirement(req_str).range
+        elif default is not None:
+            return VersionRange(default)
+        else:
+            return None
 
 
 def intersects(obj, range_):
@@ -234,6 +254,10 @@ def intersects(obj, range_):
         if req.conflict:
             return False
         range2 = req.range
+
+    # eg 'if intersects(ephemerals.get_range('foo.cli', '1'), ...)'
+    elif isinstance(obj, VersionRange):
+        range2 = obj
 
     # eg 'if intersects(resolve.maya, ...)'
     elif isinstance(obj, VariantBinding):
