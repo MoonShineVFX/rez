@@ -8,6 +8,7 @@ from rez.utils.data_utils import LazySingleton, cached_property, deep_update
 from rez.utils.logging_ import print_debug, print_warning
 from rez.vendor.six import six
 from rez.exceptions import RezPluginError
+import importlib
 import os.path
 import sys
 
@@ -52,11 +53,11 @@ def extend_path(path, name):
     init_py = "__init__" + os.extsep + "py"
     path = path[:]
 
-    for dir_ in config.plugin_path:
+    def append_if_valid(dir_):
         if not os.path.isdir(dir_):
             if config.debug("plugins"):
                 print_debug("skipped nonexistant rez plugin path: %s" % dir_)
-            continue
+            return
 
         subdir = os.path.join(dir_, pname)
         # XXX This may still add duplicate entries to path on
@@ -64,6 +65,26 @@ def extend_path(path, name):
         initfile = os.path.join(subdir, init_py)
         if subdir not in path and os.path.isfile(initfile):
             path.append(subdir)
+
+    for dir_ in config.plugin_path:
+        append_if_valid(dir_)
+
+    for name in config.plugin_module:
+        if name not in sys.modules:
+            try:
+                importlib.import_module(name)
+            except Exception:
+                if config.debug("plugins"):
+                    import traceback
+                    from rez.vendor.six.six import StringIO
+                    out = StringIO()
+                    traceback.print_exc(file=out)
+                    print_debug(out.getvalue())
+                continue
+
+        module_path = sys.modules[name].__path__
+        for dir_ in module_path:
+            append_if_valid(dir_)
 
     return path
 
@@ -126,7 +147,7 @@ class RezPluginType(object):
                     continue
 
                 plugin_name = modname.split('.')[-1]
-                if plugin_name.startswith('_'):
+                if plugin_name.startswith('_') or plugin_name == 'rezconfig':
                     continue
 
                 if config.debug("plugins"):
@@ -380,6 +401,12 @@ class BuildProcessPluginType(RezPluginType):
     type_name = "build_process"
 
 
+class ApplicationPluginType(RezPluginType):
+    """Support for different custom Rez applications/subcommands.
+    """
+    type_name = "application"
+
+
 plugin_manager = RezPluginManager()
 
 
@@ -389,6 +416,7 @@ plugin_manager.register_plugin_type(ReleaseHookPluginType)
 plugin_manager.register_plugin_type(BuildSystemPluginType)
 plugin_manager.register_plugin_type(PackageRepositoryPluginType)
 plugin_manager.register_plugin_type(BuildProcessPluginType)
+plugin_manager.register_plugin_type(ApplicationPluginType)
 
 
 # Copyright 2013-2016 Allan Johns.
