@@ -11,9 +11,10 @@ This is MoonShine's production branch, may contains some unmerged minor changes 
 
 * [nerdvegas/rez#1039](https://github.com/nerdvegas/rez/pull/1039)
 * [nerdvegas/rez#1040](https://github.com/nerdvegas/rez/pull/1040)
+* [nerdvegas/rez#1041](https://github.com/nerdvegas/rez/pull/1041)
 
 
-### Current, on 2.75.0
+### Changes, on 2.75.0
 
 * [nerdvegas/rez#1036](https://github.com/nerdvegas/rez/pull/1036)
 
