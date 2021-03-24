@@ -61,16 +61,18 @@ subcommands = {
 
 
 def load_plugin_cmd():
-    """Load extension plugin subcommand
+    """Load subcommand from command type plugin
 
-    The extension plugin module must have attribute `command_behavior`, and
-    the value must be a dict. For example:
+    The command type plugin module should have attribute `command_behavior`,
+    and the value must be a dict if provided. For example:
 
-        # in your extension plugin module
+        # in your command plugin module
         command_behavior = {
-            "hidden": False,   # optional: bool
-            "arg_mode": None,  # optional: None, "passthrough", "grouped"
+            "hidden": False,   # (bool): default False
+            "arg_mode": None,  #  (str): "passthrough", "grouped", default None
         }
+
+    If the attribute not present, default behavior will be given.
 
     """
     from rez.config import config
@@ -79,26 +81,29 @@ def load_plugin_cmd():
 
     ext_plugins = dict()
 
-    for plugin_name in plugin_manager.get_plugins("extension"):
-        module = plugin_manager.get_plugin_module("extension", plugin_name)
+    for plugin_name in plugin_manager.get_plugins("command"):
+        module = plugin_manager.get_plugin_module("command", plugin_name)
 
-        if hasattr(module, "command_behavior"):
-            try:
-                data = module.command_behavior.copy()
-                data.update({"module_name": module.__name__})
-                ext_plugins[plugin_name] = data
+        behavior = getattr(module, "command_behavior", None)
+        if behavior is None:
+            behavior = dict()
 
-            except Exception:
-                if config.debug("plugins"):
-                    import traceback
-                    from rez.vendor.six.six import StringIO
-                    out = StringIO()
-                    traceback.print_exc(file=out)
-                    print_debug(out.getvalue())
+            if config.debug("plugins"):
+                print_debug("Attribute 'command_behavior' not found in plugin "
+                            "module %s, registering with default behavior."
+                            % module.__name__)
+        try:
+            data = behavior.copy()
+            data.update({"module_name": module.__name__})
+            ext_plugins[plugin_name] = data
 
-        elif config.debug("plugins"):
-            print_debug("Attribute 'command_behavior' not found in plugin "
-                        "module %s, command not registered." % module.__name__)
+        except Exception:
+            if config.debug("plugins"):
+                import traceback
+                from rez.vendor.six.six import StringIO
+                out = StringIO()
+                traceback.print_exc(file=out)
+                print_debug(out.getvalue())
 
     return ext_plugins
 

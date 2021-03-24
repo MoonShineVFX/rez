@@ -67,11 +67,15 @@ def extend_path(path, name):
     for dir_ in config.plugin_path:
         append_if_valid(dir_)
     # Extend new-style plugins
-    for loader, name, ispkg in pkgutil.iter_modules():
-        if ispkg:
-            append_if_valid(os.path.join(loader.path, name))
+    for dir_ in plugin_manager.sys_module_paths:
+        append_if_valid(dir_)
 
     return path
+
+
+def uncache_sys_module_paths(instance=None):
+    instance = instance or plugin_manager
+    cached_property.uncache(instance, "sys_module_paths")
 
 
 class RezPluginType(object):
@@ -118,42 +122,66 @@ class RezPluginType(object):
             else package.__path__
 
         # reverse plugin path order, so that custom plugins have a chance to
-        # override the builtin plugins (from /rezplugins).
+        # be found before the builtin plugins (from /rezplugins).
         paths = reversed(paths)
 
         for path in paths:
             if config.debug("plugins"):
                 print_debug("searching plugin path %s...", path)
 
-            for loader, modname, ispkg in pkgutil.iter_modules(
+            for importer, modname, ispkg in pkgutil.iter_modules(
                     [path], package.__name__ + '.'):
 
-                if loader is None:
+                if importer is None:
                     continue
 
                 plugin_name = modname.split('.')[-1]
                 if plugin_name.startswith('_') or plugin_name == 'rezconfig':
                     continue
 
+                if plugin_name in self.plugin_modules:
+                    # same named plugins will have identical module name,
+                    # which will just reuse previous imported module from
+                    # `sys.modules` below. skipping the rest of the process
+                    # for good.
+                    if config.debug("plugins"):
+                        print_warning("skipped same named %s plugin at %s: %s"
+                                      % (self.type_name, path, modname))
+                    continue
+
                 if config.debug("plugins"):
                     print_debug("loading %s plugin at %s: %s..."
                                 % (self.type_name, path, modname))
                 try:
+                    # nerdvegas/rez#218
                     # load_module will force reload the module if it's
                     # already loaded, so check for that
-                    module = sys.modules.get(modname)
-                    if module is None:
-                        module = loader.find_module(modname).load_module(modname)
-                    if hasattr(module, 'register_plugin') and \
-                            hasattr(module.register_plugin, '__call__'):
-                        plugin_class = module.register_plugin()
-                        if plugin_class != None:
-                            self.register_plugin(plugin_name, plugin_class, module)
+                    plugin_module = sys.modules.get(modname)
+                    if plugin_module is None:
+                        loader = importer.find_module(modname)
+                        plugin_module = loader.load_module(modname)
+
+                    elif os.path.dirname(plugin_module.__file__) != path:
+                        if config.debug("plugins"):
+                            # this should not happen but if it does, tell why.
+                            print_warning(
+                                "plugin module %s is not loaded from current "
+                                "load path but reused from previous imported "
+                                "path: %s" % (modname, plugin_module.__file__))
+
+                    if (hasattr(plugin_module, "register_plugin")
+                            and callable(plugin_module.register_plugin)):
+
+                        plugin_class = plugin_module.register_plugin()
+                        if plugin_class is not None:
+                            self.register_plugin(plugin_name,
+                                                 plugin_class,
+                                                 plugin_module)
                         else:
                             if config.debug("plugins"):
                                 print_warning(
-                                    "'register_plugin' function at %s: %s did not return a class."
-                                    % (path, modname))
+                                    "'register_plugin' function at %s: %s did "
+                                    "not return a class." % (path, modname))
                     else:
                         if config.debug("plugins"):
                             print_warning(
@@ -266,6 +294,14 @@ class RezPluginManager(object):
     """
     def __init__(self):
         self._plugin_types = {}
+
+    @cached_property
+    def sys_module_paths(self):
+        paths = []
+        for importer, name, ispkg in pkgutil.iter_modules():
+            if ispkg:
+                paths.append(os.path.join(importer.path, name))
+        return paths
 
     # -- plugin types
 
@@ -386,10 +422,10 @@ class BuildProcessPluginType(RezPluginType):
     type_name = "build_process"
 
 
-class ExtensionPluginType(RezPluginType):
+class CommandPluginType(RezPluginType):
     """Support for different custom Rez applications/subcommands.
     """
-    type_name = "extension"
+    type_name = "command"
 
 
 plugin_manager = RezPluginManager()
@@ -401,7 +437,7 @@ plugin_manager.register_plugin_type(ReleaseHookPluginType)
 plugin_manager.register_plugin_type(BuildSystemPluginType)
 plugin_manager.register_plugin_type(PackageRepositoryPluginType)
 plugin_manager.register_plugin_type(BuildProcessPluginType)
-plugin_manager.register_plugin_type(ExtensionPluginType)
+plugin_manager.register_plugin_type(CommandPluginType)
 
 
 # Copyright 2013-2016 Allan Johns.
