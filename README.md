@@ -7,7 +7,7 @@
 This is MoonShine's production branch, may contains some unmerged minor changes from time to time. If so, the version number is suffixed with letter `m` to indicate that.
 
 
-### Current, on 2.77.0
+### Current, on 2.77.1
 
 * [nerdvegas/rez#1039](https://github.com/nerdvegas/rez/pull/1039)
 * [nerdvegas/rez#1040](https://github.com/nerdvegas/rez/pull/1040)
