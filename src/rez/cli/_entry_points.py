@@ -1,7 +1,7 @@
 """
 Entry points.
 """
-import os
+import os.path
 import sys
 
 
@@ -46,17 +46,7 @@ def check_production_install():
     path = os.path.dirname(sys.argv[0])
     filepath = os.path.join(path, ".rez_production_install")
 
-    if os.path.exists(filepath):
-        try:
-            # For case like `pip install rez --target <dst>`, which rez tools
-            # may not have the same directory hierarchy as normal install and
-            # makes `rez.system.rez_bin_path` not able to find the validation
-            # file from module path.
-            import rez
-            rez.production_bin_path = path
-        except ImportError:
-            pass
-    else:
+    if not os.path.exists(filepath):
         sys.stderr.write(
             "Pip-based rez installation detected. Please be aware that rez command "
             "line tools are not guaranteed to function correctly in this case. See "
