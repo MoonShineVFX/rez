@@ -9,12 +9,12 @@ This is MoonShine's production branch, may contains some unmerged minor changes 
 
 ### Current, on 2.77.1
 
-* No changes
+* [simple-production-check](https://github.com/davidlatwe/rez/tree/simple-production-check)
 
 
 ### Changes, on 2.77.0
 
-* [nerdvegas/rez#1039](https://github.com/nerdvegas/rez/pull/1039)
+* [nerdvegas/rez#1039](https://github.com/nerdvegas/rez/pull/1039) (reverted, PR closing)
 * [nerdvegas/rez#1040](https://github.com/nerdvegas/rez/pull/1040)
 * [nerdvegas/rez#1041](https://github.com/nerdvegas/rez/pull/1041)
 
