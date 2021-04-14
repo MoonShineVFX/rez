@@ -2,6 +2,7 @@
 Entry points.
 """
 import os
+import os.path
 import sys
 
 
@@ -295,3 +296,17 @@ def run_rez_benchmark():
 
     from rez.cli._main import run
     return run("benchmark")
+
+
+@scriptname("rez-pkg-ignore")
+def run_rez_pkg_ignore():
+    check_production_install()
+    from rez.cli._main import run
+    return run("pkg-ignore")
+
+
+@scriptname("rez-mv")
+def run_rez_pkg_mv():
+    check_production_install()
+    from rez.cli._main import run
+    return run("mv")
