@@ -5,6 +5,10 @@ from rez.exceptions import PackageMetadataError, InvalidPackageError
 from rez.utils.execution import add_sys_paths
 from rez.utils.sourcecode import SourceCode
 from rez.utils.logging_ import print_info, print_error
+from rez.utils.request_directives import (
+    filter_directive_requires,
+    evaluate_directive_requires,
+)
 from rez.vendor.enum import Enum
 from rez.vendor.six import six
 from inspect import isfunction
@@ -35,6 +39,9 @@ class DeveloperPackage(Package):
 
         # include modules, derived from any present @include decorators
         self.includes = None
+
+        # directive requests
+        self.directives = None
 
     @property
     def root(self):
@@ -103,7 +110,12 @@ class DeveloperPackage(Package):
             raise PackageMetadataError(
                 "Error in %r - missing or non-string field 'name'" % filepath)
 
+        # parse directive requests
+        data, directives = filter_directive_requires(data)
+
         package = create_package(name, data, package_cls=cls)
+
+        package.directives = directives
 
         # set filepath in case preprocessor needs to do something on disk (eg
         # check the git repo)
@@ -151,6 +163,34 @@ class DeveloperPackage(Package):
         """
         with set_objects(objects):
             return self.from_path(self.root)
+
+    def re_evaluate_variant(self, variant, build_context):
+        """Re-evaluate variant with resolved build context
+
+        This doesn't return new variant, but swapping the given variant's
+        resource in-place with re-created one.
+
+        Args:
+            variant (`Variant`): A variant of this package
+            build_context (`ResolvedContext`): build resolved context
+
+        Returns:
+            None
+        """
+        data = self.validated_data()
+
+        data = evaluate_directive_requires(data,
+                                           self.directives,
+                                           build_context)
+        # re-evaluate variant
+        #
+        package_cls = type(self)
+        re_evaluated_package = create_package(self.name, data, package_cls)
+        re_evaluated_variant = re_evaluated_package.get_variant(variant.index)
+        # swapping resource
+        variant._parent = re_evaluated_package
+        variant.context = re_evaluated_package.context
+        variant.wrapped = re_evaluated_variant.wrapped
 
     def _validate_includes(self):
         if not self.includes:
@@ -279,9 +319,15 @@ class DeveloperPackage(Package):
         if preprocessed_data == data:
             return None
 
+        # parse directive requests
+        preprocessed_data, directives = \
+            filter_directive_requires(preprocessed_data)
+
         # recreate package from modified package data
         package = create_package(self.name, preprocessed_data,
                                  package_cls=self.__class__)
+
+        package.directives = directives
 
         # print summary of changed package attributes
         txt = get_dict_diff_str(
