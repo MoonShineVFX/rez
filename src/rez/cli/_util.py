@@ -50,7 +50,9 @@ subcommands = {
         "arg_mode": "grouped"
     },
     "search": {},
-    "selftest": {},
+    "selftest": {
+        "arg_mode": "grouped"
+    },
     "status": {},
     "suite": {},
     "test": {},
@@ -59,7 +61,8 @@ subcommands = {
     "bundle": {},
     "benchmark": {},
     "pkg-ignore": {},
-    "mv": {}
+    "mv": {},
+    "rm": {}
 }
 
 
