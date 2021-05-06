@@ -7,7 +7,7 @@
 This is MoonShine's production branch, may contains some unmerged minor changes from time to time. If so, the version number is suffixed with letter `m` to indicate that.
 
 
-### Current, on 2.83.0
+### Current, on 2.86.1
 
 * No changes
 
