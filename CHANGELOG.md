@@ -1,5 +1,38 @@
 # Change Log
 
+## 2.88.1 (2021-05-18)
+[Source](https://github.com/nerdvegas/rez/tree/2.88.1) | [Diff](https://github.com/nerdvegas/rez/compare/2.88.0...2.88.1)
+
+**Merged pull requests:**
+
+- switch to cached root in variant binding [\#1076](https://github.com/nerdvegas/rez/pull/1076) ([nerdvegas](https://github.com/nerdvegas))
+
+**Closed issues:**
+
+- windows package cache root switch does only work with "{root}" not this.root  [\#1065](https://github.com/nerdvegas/rez/issues/1065)
+
+## 2.88.0 (2021-05-13)
+[Source](https://github.com/nerdvegas/rez/tree/2.88.0) | [Diff](https://github.com/nerdvegas/rez/compare/2.87.0...2.88.0)
+
+**Notes**
+
+This is currently implemented for linux only.
+
+**Closed issues:**
+
+- fix linking within bundles [\#1072](https://github.com/nerdvegas/rez/issues/1072)
+
+## 2.87.0 (2021-05-11)
+[Source](https://github.com/nerdvegas/rez/tree/2.87.0) | [Diff](https://github.com/nerdvegas/rez/compare/2.86.1...2.87.0)
+
+**Merged pull requests:**
+
+- added bundle support for a post_commands.py file [\#1073](https://github.com/nerdvegas/rez/pull/1073) ([nerdvegas](https://github.com/nerdvegas))
+
+**Closed issues:**
+
+- add post-context rex file in bundles [\#1071](https://github.com/nerdvegas/rez/issues/1071)
+
 ## 2.86.1 (2021-05-04)
 [Source](https://github.com/nerdvegas/rez/tree/2.86.1) | [Diff](https://github.com/nerdvegas/rez/compare/2.86.0...2.86.1)
 
