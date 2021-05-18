@@ -28,3 +28,11 @@ by hand; the 'benchmark' Github workflow does this automatically.
 | 2.84.0 | 3.7 | Linux-5.4.0-1043-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz | 2 | 1.80 | 3.17 | 3.21 |
 | 2.85.0 | 2.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz | 2 | 1.72 | 2.88 | 2.93 |
 | 2.85.0 | 3.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz | 2 | 1.63 | 2.82 | 2.84 |
+| 2.86.1 | 2.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz | 2 | 1.63 | 2.79 | 2.84 |
+| 2.86.1 | 3.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz | 2 | 1.60 | 2.96 | 3.04 |
+| 2.87.0 | 2.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz | 2 | 1.79 | 3.09 | 3.05 |
+| 2.87.0 | 3.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) CPU E5-2673 v4 @ 2.30GHz | 2 | 1.74 | 3.01 | 3.00 |
+| 2.88.0 | 2.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz | 2 | 1.85 | 3.13 | 3.14 |
+| 2.88.0 | 3.7 | Linux-5.4.0-1046-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) CPU E5-2673 v3 @ 2.40GHz | 2 | 1.51 | 2.74 | 2.78 |
+| 2.88.1 | 2.7 | Linux-5.4.0-1047-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz | 2 | 1.57 | 2.65 | 2.70 |
+| 2.88.1 | 3.7 | Linux-5.4.0-1047-azure-x86_64-with-debian-bullseye-sid | Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz | 2 | 1.57 | 2.89 | 2.96 |
