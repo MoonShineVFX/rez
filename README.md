@@ -15,9 +15,14 @@ This is MoonShine's **development** branch, may contains some unmerged minor cha
 > :banana: (local change)
 
 
-### Current, on 2.86.1-m
+### Current, on 2.88.1-m
 
-* [nerdvegas/rez#1067](https://github.com/nerdvegas/rez/pull/1067) :pear: Fix #1065 package cache root
+No Changes.
+
+
+### Changes, on 2.86.1
+
+* [nerdvegas/rez#1067](https://github.com/nerdvegas/rez/pull/1067) :tomato: Fix #1065 package cache root
 * [nerdvegas/rez#1060](https://github.com/nerdvegas/rez/pull/1060) :pear: REP-002.006 directive request
 
 
