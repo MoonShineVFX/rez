@@ -14,7 +14,7 @@ This is MoonShine's production branch, may contains some unmerged minor changes 
 > 
 > :banana: (local change)
 
-### Current, on 2.86.1
+### Current, on 2.88.1
 
 * No changes
 
