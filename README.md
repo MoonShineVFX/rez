@@ -20,6 +20,7 @@ This is MoonShine's production branch, may contains some unmerged minor changes 
 * [fix-env-binding](https://github.com/davidlatwe/rez/tree/fix-env-binding) :banana:
 * [nerdvegas/rez#1040](https://github.com/nerdvegas/rez/pull/1040) :pear: Extension plugins
 * [nerdvegas/rez#1083](https://github.com/nerdvegas/rez/pull/1083) :pear: Improve context resolve failure info
+* [nerdvegas/rez#1087](https://github.com/nerdvegas/rez/pull/1087) :pear: Fix conflict fail graph
 
 
 ### Changes, on 2.77.0
