@@ -11,6 +11,7 @@ __license__ = "LGPL"
 
 
 module_root_path = __path__[0]  # noqa
+production_bin_path = None
 
 
 # TODO: Revamp logging. For now, this is here for backwards compatibility

@@ -2,7 +2,6 @@
 Entry points.
 """
 import os
-import os.path
 import sys
 
 
@@ -47,7 +46,13 @@ def check_production_install():
     path = os.path.dirname(sys.argv[0])
     filepath = os.path.join(path, ".rez_production_install")
 
-    if not os.path.exists(filepath):
+    if os.path.exists(filepath):
+        try:
+            import rez
+            rez.production_bin_path = path
+        except ImportError:
+            pass
+    else:
         sys.stderr.write(
             "Pip-based rez installation detected. Please be aware that rez command "
             "line tools are not guaranteed to function correctly in this case. See "
