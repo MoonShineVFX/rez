@@ -14,9 +14,9 @@ This is MoonShine's production branch, may contains some unmerged minor changes 
 > 
 > :banana: (local change)
 
-### Current, on 2.88.1
+### Current, on 2.88.2
 
-* No changes
+* [simple-production-check](https://github.com/davidlatwe/rez/tree/simple-production-check) :banana:
 
 
 ### Changes, on 2.77.0
