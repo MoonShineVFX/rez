@@ -15,9 +15,11 @@ This is MoonShine's **development** branch, may contains some unmerged minor cha
 > :banana: (local change)
 
 
-### Current, on 2.88.1-m
+### Current, on 2.88.2-m
 
-No Changes.
+* [fix-env-binding](https://github.com/davidlatwe/rez/tree/fix-env-binding) :banana:
+* [nerdvegas/rez#1083](https://github.com/nerdvegas/rez/pull/1083) :pear: Improve context resolve failure info
+* [nerdvegas/rez#1087](https://github.com/nerdvegas/rez/pull/1087) :pear: Fix conflict fail graph
 
 
 ### Changes, on 2.86.1
