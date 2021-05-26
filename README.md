@@ -17,6 +17,7 @@ This is MoonShine's production branch, may contains some unmerged minor changes 
 ### Current, on 2.88.2
 
 * [simple-production-check](https://github.com/davidlatwe/rez/tree/simple-production-check) :banana:
+* [fix-env-binding](https://github.com/davidlatwe/rez/tree/fix-env-binding) :banana:
 
 
 ### Changes, on 2.77.0
