@@ -4,7 +4,7 @@
 
 ### Disclaimers
 
-This is MoonShine's **development** branch, may contains some unmerged minor changes from time to time. If so, the version number is suffixed with `-m` to indicate that.
+This is MoonShine's **development** branch, may contains some unmerged minor changes from time to time. If so, the version number is suffixed with `-md` to indicate that.
 
 > :grapes: (PR merged)
 > 
@@ -15,7 +15,7 @@ This is MoonShine's **development** branch, may contains some unmerged minor cha
 > :banana: (local change)
 
 
-### Current, on 2.88.2-m
+### Current, on 2.88.2-md
 
 * [fix-env-binding](https://github.com/davidlatwe/rez/tree/fix-env-binding) :banana:
 * [nerdvegas/rez#1083](https://github.com/nerdvegas/rez/pull/1083) :pear: Improve context resolve failure info
