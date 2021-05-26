@@ -18,6 +18,7 @@ This is MoonShine's production branch, may contains some unmerged minor changes 
 
 * [simple-production-check](https://github.com/davidlatwe/rez/tree/simple-production-check) :banana:
 * [fix-env-binding](https://github.com/davidlatwe/rez/tree/fix-env-binding) :banana:
+* [nerdvegas/rez#1083](https://github.com/nerdvegas/rez/pull/1083) :pear: Improve context resolve failure info
 
 
 ### Changes, on 2.77.0
