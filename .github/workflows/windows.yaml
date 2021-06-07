@@ -37,6 +37,14 @@ jobs:
       # DockerHub base image name. May switch to GitHub Docker Packages
       # in the future. See GitHub Issue #789 and PR #830
       BASE_IMAGE_NAME: "nerdvegas/rez-win-py:${{ matrix.python-version }}"
+      # Commit id copied from nerdvegas/rez
+      #   In #1039, `rez-win-py/entrypoint.ps1` was changed and reverted,
+      #   which in spite of the file content is the same as upstream but
+      #   the commit id is different hence we can not compose the correct
+      #   docker image revision.
+      #   So we have to live with it until upstream (nerdvegas/rez) changed
+      #   the docker images with new commit.
+      _LAST_DOCKER_REVISION: "69aecbac"
 
     strategy:
 
@@ -57,6 +65,7 @@ jobs:
       - name: Run Docker image (installs and tests rez)
         run: |
           ${Env:LAST_DOCKER_REVISION} = $( git log -n 1 --author-date-order --pretty=format:%H -- .\.github\docker\rez-win-py\ .\.github\docker\rez-win-base\ .\.github\workflows\windows-docker-image.yaml ).SubString(0, 8)
+          ${Env:LAST_DOCKER_REVISION} = ${Env:_LAST_DOCKER_REVISION}
           ${docker_image} = "${{ Env.BASE_IMAGE_NAME }}-${Env:LAST_DOCKER_REVISION}"
 
           Write-Output "Running DockerHub ${docker_image}..."
