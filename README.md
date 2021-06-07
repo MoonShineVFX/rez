@@ -4,7 +4,7 @@
 
 ### Disclaimers
 
-This is MoonShine's production branch, may contains some unmerged minor changes from time to time. If so, the version number is suffixed with `-m` to indicate that.
+This is MoonShine's production branch, may contains some unmerged minor changes from time to time. If so, the version number is suffixed with `+m` to indicate that.
 
 > :grapes: (PR merged)
 > 
