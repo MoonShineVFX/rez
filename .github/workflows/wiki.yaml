@@ -33,7 +33,6 @@ jobs:
             --keep-temp \
             --no-push \
             --github-release=${rezver} \
-            --github-branch=production \
             --wiki-dir="${{ github.workspace }}"/"${{ env.TEMP_WIKI_DIR }}" \
             --wiki-url="${{ env.CLONE_URL }}"
 
@@ -64,5 +63,5 @@ jobs:
           git commit \
             -m "Generated from GitHub "${{ github.workflow }}" Workflow" \
             && git remote set-url origin "${{ env.CLONE_URL }}" \
-            && git push origin production \
+            && git push origin \
             || echo "Nothing new to commit"
