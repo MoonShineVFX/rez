@@ -1,5 +1,45 @@
 # Change Log
 
+## 2.89.1 (2021-06-02)
+[Source](https://github.com/nerdvegas/rez/tree/2.89.1) | [Diff](https://github.com/nerdvegas/rez/compare/2.89.0...2.89.1)
+
+**Merged pull requests:**
+
+- disable memcache when ignoring hidden pkgs [\#1090](https://github.com/nerdvegas/rez/pull/1090) ([nerdvegas](https://github.com/nerdvegas))
+
+**Closed issues:**
+
+- rez-rm --ignored-since faulty in combo with memcached enabled [\#1089](https://github.com/nerdvegas/rez/issues/1089)
+
+## 2.89.0 (2021-06-01)
+[Source](https://github.com/nerdvegas/rez/tree/2.89.0) | [Diff](https://github.com/nerdvegas/rez/compare/2.88.4...2.89.0)
+
+**Merged pull requests:**
+
+- Improve context resolve failure info [\#1083](https://github.com/nerdvegas/rez/pull/1083) ([davidlatwe](https://github.com/davidlatwe))
+
+## 2.88.4 (2021-06-01)
+[Source](https://github.com/nerdvegas/rez/tree/2.88.4) | [Diff](https://github.com/nerdvegas/rez/compare/2.88.3...2.88.4)
+
+**Merged pull requests:**
+
+- Fix conflict fail graph #865 [\#1087](https://github.com/nerdvegas/rez/pull/1087) ([davidlatwe](https://github.com/davidlatwe))
+
+**Closed issues:**
+
+- fail-graph not showing true root of the conflict [\#865](https://github.com/nerdvegas/rez/issues/865)
+
+## 2.88.3 (2021-06-01)
+[Source](https://github.com/nerdvegas/rez/tree/2.88.3) | [Diff](https://github.com/nerdvegas/rez/compare/2.88.2...2.88.3)
+
+**Merged pull requests:**
+
+- Refactor: Split add_standard_build_actions introducing add_pre_build_commands [\#1077](https://github.com/nerdvegas/rez/pull/1077) ([Tilix4](https://github.com/Tilix4))
+
+**Closed issues:**
+
+- include could not find load file: RezBuild error on Windows [\#974](https://github.com/nerdvegas/rez/issues/974)
+
 ## 2.88.2 (2021-05-20)
 [Source](https://github.com/nerdvegas/rez/tree/2.88.2) | [Diff](https://github.com/nerdvegas/rez/compare/2.88.1...2.88.2)
 
