@@ -62,6 +62,6 @@ jobs:
         run: |
           git commit \
             -m "Generated from GitHub "${{ github.workflow }}" Workflow" \
-            && git remote set-url origin "${{ github.repository }}" \
+            && git remote set-url origin "github.com/${{ github.repository }}.git" \
             && git push origin production \
             || echo "Nothing new to commit"
