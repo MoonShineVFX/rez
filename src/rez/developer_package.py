@@ -2,12 +2,13 @@ from rez.config import config
 from rez.packages import Package, create_package
 from rez.serialise import load_from_file, FileFormat, set_objects
 from rez.exceptions import PackageMetadataError, InvalidPackageError
+from rez.utils.data_utils import cached_property
 from rez.utils.execution import add_sys_paths
 from rez.utils.sourcecode import SourceCode
 from rez.utils.logging_ import print_info, print_error
 from rez.utils.request_directives import (
     filter_directive_requires,
-    evaluate_directive_requires,
+    expand_directive_requires,
 )
 from rez.vendor.enum import Enum
 from rez.vendor.six import six
@@ -110,8 +111,12 @@ class DeveloperPackage(Package):
             raise PackageMetadataError(
                 "Error in %r - missing or non-string field 'name'" % filepath)
 
+        # preserve for preprocess function
+        raw_data = data.copy()
+
         # parse directive requests
-        data, directives = filter_directive_requires(data)
+        filtered_data, directives = filter_directive_requires(data)
+        data.update(filtered_data)
 
         package = create_package(name, data, package_cls=cls)
 
@@ -122,7 +127,7 @@ class DeveloperPackage(Package):
         package.filepath = filepath
 
         # preprocessing
-        result = package._get_preprocessed(data)
+        result = package._get_preprocessed(raw_data)
 
         if result:
             package, data = result
@@ -164,11 +169,8 @@ class DeveloperPackage(Package):
         with set_objects(objects):
             return self.from_path(self.root)
 
-    def re_evaluate_variant(self, variant, build_context):
-        """Re-evaluate variant with resolved build context
-
-        This doesn't return new variant, but swapping the given variant's
-        resource in-place with re-created one.
+    def expand_requirements_on_resolved(self, variant, build_context):
+        """Expand variant requirements with resolved build context
 
         Args:
             variant (`Variant`): A variant of this package
@@ -177,20 +179,25 @@ class DeveloperPackage(Package):
         Returns:
             None
         """
+        if not self.directives:
+            return
+
         data = self.validated_data()
 
-        data = evaluate_directive_requires(data,
-                                           self.directives,
-                                           build_context)
-        # re-evaluate variant
-        #
-        package_cls = type(self)
-        re_evaluated_package = create_package(self.name, data, package_cls)
-        re_evaluated_variant = re_evaluated_package.get_variant(variant.index)
-        # swapping resource
-        variant._parent = re_evaluated_package
-        variant.context = re_evaluated_package.context
-        variant.wrapped = re_evaluated_variant.wrapped
+        expanded = expand_directive_requires(data,
+                                             self.directives,
+                                             build_context,
+                                             variant.index)
+        # update resource data
+        for key, value in expanded.items():
+            if key in self.arbitrary_keys():
+                self.resource._data[key] = value
+            else:
+                setattr(self.resource, key, value)
+
+        # un-cache related attributes
+        if "variants" in expanded:
+            cached_property.uncache(variant.resource, "variant_requires")
 
     def _validate_includes(self):
         if not self.includes:
@@ -319,9 +326,13 @@ class DeveloperPackage(Package):
         if preprocessed_data == data:
             return None
 
+        # preserve for dict-diff, no need to differing filtered directives
+        raw_preprocessed_data = preprocessed_data.copy()
+
         # parse directive requests
-        preprocessed_data, directives = \
+        filtered_data, directives = \
             filter_directive_requires(preprocessed_data)
+        preprocessed_data.update(filtered_data)
 
         # recreate package from modified package data
         package = create_package(self.name, preprocessed_data,
@@ -332,7 +343,7 @@ class DeveloperPackage(Package):
         # print summary of changed package attributes
         txt = get_dict_diff_str(
             data,
-            preprocessed_data,
+            raw_preprocessed_data,
             title="Package attributes were changed in preprocessing:"
         )
         print_info(txt)
