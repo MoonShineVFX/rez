@@ -15,7 +15,7 @@ This is MoonShine's **development** branch, may contains some unmerged minor cha
 > :banana: (local change)
 
 
-### Current, on 2.89.1
+### Current, on 2.90.1
 
 * [fix-env-binding](https://github.com/davidlatwe/rez/tree/fix-env-binding) :banana:
 * [nerdvegas/rez#1083](https://github.com/nerdvegas/rez/pull/1083) :grapes: Improve context resolve failure info
